@@ -1,0 +1,119 @@
+  - name: Cleanup Ansibleforms Jobs
+    showHelp: true
+    help: |
+      This form starts the `ansibleforms_job_cleanup.yaml` playbook
+
+      It will remove all ansible job logs
+    roles:
+      - admin
+    description: This will cleanup all ansible job logs.
+    icon: trash
+    credentials:
+      mysql_credentials: __self__
+    categories:
+      - Demo
+      - Ansible
+      - Maintenance
+    tileClass: has-background-danger-light
+    playbook: ansibleforms_job_cleanup.yaml
+    type: ansible
+    fields:
+      - type: checkbox
+        name: areyousure
+        label: Confirmation
+        default: false
+        placeholder: Are you sure you want to cleanup
+      - type: text
+        name: confirmation
+        label: Please type YES to confirm you want to cleanup
+        placeholder: YES
+        required: true
+        regex:
+          expression: ^YES$
+          description: Type YES to confirm
+        dependencies:
+          - name: areyousure
+            values:
+              - true
+  - name: Pip Install Package
+    showHelp: true
+    help: |
+      This form starts the `ansibleforms_pip_install.yaml` playbook  
+        
+      It allows to install a python package within the persistent folder, so it becomes boot resistent.
+    description: Install a python package in the persistent folder.
+    type: ansible
+    playbook: ansibleforms_pip_install.yaml
+    roles:
+      - admin
+    categories:
+      - Maintenance
+    tileClass: has-background-info-light
+    icon: spider
+    fields:
+      - name: library_name
+        label: Enter the Name of the package
+        type: text
+  - name: Ansible-Galaxy Install
+    showHelp: true
+    help: >
+      This form starts the `ansibleforms_ansible_galaxy_install.yaml` playbook  
+        
+      It allows to install an ansible-galaxy role or collection within the persistent folder, so it becomes boot resistent.
+    description: Install an ansible-galaxy role or collection in the persistent folder.
+    type: ansible
+    playbook: ansibleforms_ansible_galaxy_install.yaml
+    roles:
+      - admin
+    categories:
+      - Maintenance
+    tileClass: has-background-info-light
+    image: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii05Ny42MiAtMTQ3LjI0IDEyMCA2MCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTS01Ny42LTExNy4yNEExNy45IDE3LjkgMCAwIDEtNzUuNS05OS4zNDFjLTkuODg1IDAtMTcuODk4LTguMDEzLTE3Ljg5OC0xNy44OThzOC4wMTQtMTcuODk4IDE3Ljg5OC0xNy44OTggMTcuODk4IDguMDE0IDE3Ljg5OCAxNy45IiBmaWxsPSIjMWExOTE4Ii8+PHBhdGggZD0iTS03NS4xOTgtMTI0LjIwNGw0LjYzMiAxMS40MzItNi45OTYtNS41MXptOC4yMjggMTQuMDY1bC03LjEyNS0xNy4xNDZjLS4yMDMtLjQ5NC0uNi0uNzU2LTEuMTA0LS43NTZzLS45My4yNjItMS4xMzQuNzU2bC03LjgyIDE4LjgwN2gyLjY3NWwzLjA5NS03Ljc1NCA5LjIzOCA3LjQ2M2MuMzcyLjMuNjQuNDM2Ljk4OC40MzYuNjk4IDAgMS4zMDgtLjUyMyAxLjMwOC0xLjI3OCAwLS4xMjMtLjA0NC0uMzE4LS4xMjItLjUyOHoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNLTMzLjA2OC0xMTEuODg2Yy0uMTg1IDAtLjM4NC0uMDQ3LS41MjMtLjIzNGwtNS45MzMtNy44MDJ2Ny45NThoLTEuMzUzdi05LjhjMC0uNC4zMjMtLjcwMi42OTItLjcwMi4yMTUgMCAuNC4wNjMuNTM4LjI1bDUuOTE3IDcuNzg2di03LjkyN2gxLjM1M3Y5Ljc4NGEuNjguNjggMCAwIDEtLjY5Mi42ODdtNy44MjguMDk0Yy0xLjM1MiAwLTIuNzY3LS4yOC00LjA4OC0uNzhsLjMyMy0xLjEyM2MxLjIxNC40IDIuNTM2LjY3IDMuNzY1LjY3IDEuNzA2IDAgMi41OTgtLjYwOCAyLjU5OC0xLjQ2NiAwLS43OC0uNjkyLTEuMTctMy4wNzQtMi4yOTRzLTMuMzItMS44NC0zLjMyLTMuMjQ1YzAtMS43NjMgMS4zNTItMi40OCAzLjkwNC0yLjQ4IDEuMDYgMCAyLjcuMjIgMy42MjguNWwtLjIxNSAxLjE1NGExNS40MSAxNS40MSAwIDAgMC0zLjM4Mi0uNDJjLTEuNzk4IDAtMi41MzYuMzQzLTIuNTM2IDEuMjAyIDAgLjg0Mi41MzggMS4yIDMuMDU4IDIuMzcyIDIuNjYgMS4yMzMgMy4zMzUgMS44NTcgMy4zMzUgMy4xMzcgMCAxLjg1Ny0xLjc1MyAyLjc3OC0zLjk5NiAyLjc3OG03LjA0NC0xMC41ODdoMS4zOTh2MTAuMzkyaC0xLjM5OHptMTAuNzQgNS41NjVoLTMuNDc0djMuNTI3aDMuNDc0YzEuMTgzIDAgMS45MDYtLjc1IDEuOTA2LTEuNzk1IDAtLjk4My0uNzUzLTEuNzMyLTEuOTA2LTEuNzMybS0uNjc3LTQuNDk0aC0yLjc5N3YzLjMyNGgyLjc5N2MxLjEyMiAwIDEuOTM3LS43MTggMS45MzctMS43MTcgMC0uOTgzLS43MDctMS42MDctMS45MzctMS42MDdtLjY5MiA5LjIwNmgtNC4xOGMtLjQgMC0uNzA3LS4zMTItLjcwNy0uNzAydi04Ljk4OGEuNzEuNzEgMCAwIDEgLjcwNy0uNzAyaDMuNDU4YzIuMTIgMCAzLjM4IDEuMDQ1IDMuMzggMi42ODQgMCAuOS0uNTIzIDEuNzE2LTEuMzIyIDIuMiAxLjE4NC4zNiAxLjk4MyAxLjM0MiAxLjk4MyAyLjUyOCAwIDEuNjU0LTEuMzY3IDIuOTgtMy4zMiAyLjk4bTcuNC0uMTE1Yy0uMzg0IDAtLjctLjMyOC0uNy0uNzAydi05LjdoMS40djkuMTI4SDYuMjR2MS4yNjR6bTEyLjc5Ny4wNTdjLTIuODYgMC00LjU4LTEuMDYtNC41OC0zLjIgMC0xLjAxNC41Ny0xLjk4MiAxLjY3Ni0yLjQzNC0uOS0uNTYyLTEuMzUzLTEuMzU4LTEuMzUzLTIuMjMyIDAtMS45MzUgMS40OTItMi44NTYgNC4zLTIuODU2YTE2LjYxIDE2LjYxIDAgMCAxIDMuMzY2LjM1OWwtLjE1NCAxLjE1NWMtMS4xNjgtLjE4Ny0yLjI2LS4yOTYtMy4zMi0uMjk2LTEuODE0IDAtMi43ODIuNS0yLjc4MiAxLjcgMCAuOTUyLjg5MiAxLjcgMi4wNzYgMS43aDIuMzk4YS41OS41OSAwIDAgMSAuNTk5LjU5M2MwIC4zNDMtLjI2LjYwOC0uNi42MDhoLTIuNTgyYy0xLjM1MyAwLTIuMjEzLjY3LTIuMjEzIDEuNyAwIDEuNTEzIDEuMzk4IDEuOTY2IDMuMTUgMS45NjYuOTUzIDAgMi4yNDQtLjEyNCAzLjMtLjM3NGwuMiAxLjEzOGExMy42MSAxMy42MSAwIDAgMS0zLjQ1OS40NjltLTYxLjMwMy04LjE1OGwyLjQ1IDYuMTM4LTMuNy0yLjk2em00LjM1MiA3LjU1MmwtMy43NjgtOS4yMDZjLS4xMDgtLjI2NS0uMzIzLS40MDYtLjU4NC0uNDA2YS42My42MyAwIDAgMC0uNi40MDZsLTQuMTIyIDEwLjM3MyAxLjQtLjI3NiAxLjYzNy00LjE2MyA0Ljg4NSA0LjAwN2MuMTk3LjE2LjMzOC4yMzQuNTIzLjIzNGEuNjguNjggMCAwIDAgLjY5MS0uNjg3LjkzLjkzIDAgMCAwLS4wNjQtLjI4M3oiIGZpbGw9IiMxYTE5MTgiLz48L3N2Zz4=
+    fields:
+      - name: type
+        type: radio
+        values:
+          - collection
+          - role
+        default: collection
+      - name: collection
+        label: Enter the Name of the collection
+        type: text
+        model: name
+        dependencies:
+          - name: type
+            values:
+              - collection
+      - name: role
+        label: Enter the Name of the role
+        type: text
+        model: name
+        dependencies:
+          - name: type
+            values:
+              - role
+      - name: force
+        type: checkbox
+      - name: destination
+        type: local_out
+        expression: "'/etc/ansible/$(type)s'"
+    source: maintenance.yaml
+  - name: Alter user for caching sha2 password
+    showHelp: true
+    help: >
+      This form can change the databases user to caching sha2 password.  
+        
+      This is generally done after upgrading to mysql 8.x and when you get warnings in the log files.
+    description: Change the authentication plugin for a database user to caching_sha2_password
+    type: ansible
+    playbook: ansibleforms_alter_user_caching_sha2_password.yaml
+    roles:
+      - admin
+    categories:
+      - Maintenance
+    credentials:
+      mysql_credentials: __self__
+    tileClass: has-background-info-light
+    image: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA5LjI1MiA0LjYyNiI+PGcgdHJhbnNmb3JtPSJtYXRyaXgoLjAzNzM3NiAwIDAgLjAzNzM3NiAxLjA2OTk5NCAtMS4zMTkzMzkpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik04LjUwNCAxMjguMjE1aDUuOHYtMjIuOTc3bDkuMDU4IDIwLjAzM2MxLjAyNiAyLjQwOCAyLjUgMy4zIDUuMzU0IDMuM3M0LjI0LS44OTMgNS4zLTMuM2w5LjAxMy0yMC4wMzN2MjIuOTc3aDUuODQ1di0yMi45NzdjMC0yLjIzLS44OTMtMy4zMDMtMi43NjctMy44ODMtNC40MTctMS4zMzgtNy4zNjItLjE3OC04LjcgMi44MWwtOC44NzggMTkuODEtOC41NjctMTkuODFjLTEuMjk0LTIuOTg4LTQuMjg0LTQuMTQ4LTguNzQ1LTIuODEtMS44My41OC0yLjcyMiAxLjY1Mi0yLjcyMiAzLjg4M2wtLjAwMSAyMi45Nzd6bTQ1LjE5OC0xOC42OTRoNS44NDV2MTIuNjI3Yy0uMDQ0LjcxMy4yMjMgMi4zMiAzLjQgMi4zNjMgMS42NS4wNDUgMTIuNTgyIDAgMTIuNjcgMHYtMTUuMDhoNS44NDV2MjAuNjU4YzAgNS4wODYtNi4zIDYuMi05LjIzNiA2LjI0NmgtMTguMzh2LTMuODhoMTguNDI3YzMuNzQ4LS40MDIgMy4zMDItMi4yNzUgMy4zMDItMi45di0xLjUxOGgtMTIuMzZjLTUuNzU2LS4wNDUtOS40Ni0yLjU4OC05LjUwMy01LjQ4OHYtMTMuMDN6bTEyNS4zNzQtMTQuNjM1Yy0zLjU2OC0uMDktNi4zMzYuMjY4LTguNjU2IDEuMjUtLjY2OC4yNy0xLjc0LjI3LTEuODI4IDEuMTE2LjM1Ny4zNTUuNC45MzYuNzEzIDEuNDI4LjUzNS44OTMgMS40NzMgMi4wOTYgMi4zMiAyLjcyLjkzOC43MTUgMS44NzUgMS40MjggMi44NTUgMi4wNTMgMS43NCAxLjA3IDMuNzAzIDEuNjk1IDUuMzk4IDIuNzY2Ljk4Mi42MjUgMS45NjMgMS40MjggMi45NDUgMi4wOTguNS4zNTcuODAzLjkzOCAxLjQyOCAxLjE2di0uMTM1Yy0uMzEyLS40LS40MDItLjk4LS43MTMtMS40MjgtLjQ0Ny0uNDQ1LS44OTMtLjg0OC0xLjM0LTEuMjkzLTEuMjkzLTEuNzQtMi45LTMuMjU4LTQuNjQtNC41MDYtMS40MjgtLjk4Mi00LjU1LTIuMzItNS4xMy0zLjk3bC0uMDg4LS4wOWMuOTgtLjA5IDIuMTQtLjQ0NyAzLjA3OC0uNzE1IDEuNTE4LS40IDIuOS0uMzEyIDQuNDYtLjcxMy43MTUtLjE4IDEuNDI4LS40MDIgMi4xNDMtLjYyNXYtLjRjLS44MDMtLjgwMy0xLjM4My0xLjg3NC0yLjIzLTIuNjMyLTIuMjc1LTEuOTYzLTQuNzc1LTMuODgyLTcuMzYzLTUuNDg4LTEuMzgzLS44OTItMy4xNjgtMS40NzMtNC42NC0yLjIzLS41MzctLjI2OC0xLjQyOC0uNDAyLTEuNzQtLjg0OC0uODA1LS45OC0xLjI1LTIuMjc1LTEuODMtMy40MzYtMS4yOTMtMi40NTQtMi41NDMtNS4xNzUtMy42NTgtNy43NjMtLjgwMy0xLjc0LTEuMjk1LTMuNDgtMi4yNzUtNS4wODYtNC41OTYtNy41ODUtOS41OTQtMTIuMTgtMTcuMjY4LTE2LjY4Ny0xLjY1LS45MzctMy42MTMtMS4zNC01LjctMS44M2wtMy4zNDYtLjE4Yy0uNzE1LS4zMTItMS40MjgtMS4xNi0yLjA1My0xLjU2Mi0yLjU0My0xLjYwNi05LjEwMi01LjA4Ni0xMC45NzctLjQ5LTEuMjA1IDIuOSAxLjc4NSA1Ljc1NSAyLjggNy4yMjguNzYgMS4wMjYgMS43NCAyLjE4NiAyLjI3NyAzLjM0Ni4zLjc1OC40IDEuNTYyLjcxMyAyLjM2NS43MTMgMS45NjMgMS4zODMgNC4xNSAyLjMyIDUuOTguNS45MzcgMS4wMjUgMS45MiAxLjY1IDIuNzY3LjM1Ny40OS45ODIuNzE0IDEuMTE1IDEuNTE3LS42MjUuODkzLS42NjggMi4yMy0xLjAyNSAzLjM0Ny0xLjYwNyA1LjA0Mi0uOTgyIDExLjI4OCAxLjI5MyAxNC45OS43MTUgMS4xMTUgMi40IDMuNTcgNC42ODYgMi42MzIgMi4wMDgtLjgwMyAxLjU2LTMuMzQ2IDIuMTQtNS41NzcuMTM1LS41MzUuMDQ1LS44OTIuMzEyLTEuMjV2LjA5bDEuODMgMy43MDNjMS4zODMgMi4xODYgMy43OTMgNC40NjIgNS44IDUuOTggMS4wNy44MDMgMS45MTggMi4xODcgMy4yNTYgMi42Nzd2LS4xMzVoLS4wODhjLS4yNjgtLjQtLjY3LS41OC0xLjAyNy0uODkyLS44MDMtLjgwMy0xLjY5NS0xLjc4NS0yLjMyLTIuNjc3LTEuODczLTIuNDk4LTMuNTIzLTUuMjY1LTQuOTk2LTguMTItLjcxNS0xLjM4My0xLjM0LTIuOS0xLjkxOC00LjI4My0uMjctLjUzNi0uMjctMS4zNC0uNzE1LTEuNjA2LS42Ny45OC0xLjY1IDEuODMtMi4xNDMgMy4wMzQtLjg0OCAxLjkxOC0uOTM2IDQuMjgzLTEuMjQ4IDYuNzM3LS4xOC4wNDUtLjEgMC0uMTguMDktMS40MjYtLjM1Ni0xLjkxOC0xLjgzLTIuNDUzLTMuMDc4LTEuMzM4LTMuMTY4LTEuNTYyLTguMjU0LS40MDItMTEuOTEzLjMxMi0uOTM3IDEuNjUyLTMuODgyIDEuMTE3LTQuNzc0LS4yNy0uODQ4LTEuMTYtMS4zMzgtMS42NTItMi4wMDgtLjU4LS44NDgtMS4yMDMtMS45MTgtMS42MDUtMi44NTUtMS4wNy0yLjUtMS42MDUtNS4yNjUtMi43NjYtNy43NjQtLjUzNy0xLjE2LTEuNDczLTIuMzY1LTIuMjMyLTMuNDM1LS44NDgtMS4yMDUtMS43ODMtMi4wNTMtMi40NTMtMy40OC0uMjIzLS40OS0uNTM1LTEuMjk0LS4xNzgtMS44My4wODgtLjM1Ny4yNjgtLjQ5LjYyMy0uNTguNTgtLjQ5IDIuMjMyLjEzNCAyLjgxMi40IDEuNjUuNjcgMy4wMzMgMS4yOTQgNC40MTYgMi4yMy42MjUuNDQ2IDEuMjk1IDEuMjk0IDIuMDk4IDEuNTE4aC45MzhjMS40MjguMzEyIDMuMDMzLjA5IDQuMzcuNDkgMi4zNjUuNzYgNC41MDYgMS44NzQgNi40MjYgMy4wOCA1Ljg0NCAzLjcwMyAxMC42NjQgOC45NjggMTMuOTIgMTUuMjYuNTM1IDEuMDI2Ljc1OCAxLjk2MyAxLjI1IDMuMDM0LjkzOCAyLjE4NyAyLjA5OCA0LjQxNyAzLjAzMyA2LjU2LjkzOCAyLjA5NyAxLjgzIDQuMjQgMy4xNjggNS45OC42Ny45MzcgMy4zNDYgMS40MjcgNC41NSAxLjkxOC44OTMuNCAyLjI3NS43NiAzLjA4IDEuMjUgMS41MTYuOTM3IDMuMDMzIDIuMDA4IDQuNDYgMy4wMzQuNzEzLjUzNCAyLjk0NSAxLjY1IDMuMDc4IDIuNTR6bS00NS41LTM4Ljc3MmE3LjA5IDcuMDkgMCAwIDAtMS44MjguMjIzdi4wOWguMDg4Yy4zNTcuNzE0Ljk4MiAxLjIwNSAxLjQyOCAxLjgzbDEuMDI3IDIuMTQyLjA4OC0uMDljLjYyNS0uNDQ2LjkzOC0xLjE2LjkzOC0yLjIzLS4yNjgtLjMxMi0uMzEyLS42MjUtLjUzNS0uOTM3LS4yNjgtLjQ0Ni0uODQ4LS42Ny0xLjIwNi0xLjAyNnoiIGZpbGw9IiMwMDY3OGMiLz48cGF0aCBkPSJNODUuOTE2IDEyOC4yMTVoMTYuNzc2YzEuOTYzIDAgMy44MzgtLjQgNS4zNTQtMS4xMTUgMi41NDMtMS4xNiAzLjc0OC0yLjcyIDMuNzQ4LTQuNzczdi00LjI4M2MwLTEuNjUtMS4zODMtMy4yMTMtNC4xNDgtNC4yODMtMS40MjgtLjUzNS0zLjIxMy0uODQ4LTQuOTUzLS44NDhoLTcuMDVjLTIuMzY1IDAtMy40OC0uNzE1LTMuNzkzLTIuMjc1LS4wNDQtLjE3OC0uMDQ0LS4zNTctLjA0NC0uNTM1di0yLjYzM2MwLS4xMzUgMC0uMzEyLjA0NC0uNDkuMzEyLTEuMjA1LjkzNy0xLjUxOCAzLTEuNzRoMTcuMTc3di0zLjg4M2gtMTYuMzNjLTIuMzY1IDAtMy42MTQuMTM1LTQuNzMuNDkyLTMuNDM2IDEuMDctNC45NTMgMi43NjYtNC45NTMgNS43NTR2My4zOTNjMCAyLjYzIDIuOTQ1IDQuODYzIDcuOTQyIDUuMzk4LjUzNS4wNDUgMS4xMTUuMDQ1IDEuNjk1LjA0NWg2LjAyNGMuMjIzIDAgLjQ0NSAwIC42MjMuMDQ1IDEuODMuMTc4IDIuNjMzLjQ5IDMuMTY4IDEuMTU4LjM1Ny4zNTcuNDQ3LjY3LjQ0NyAxLjA3MnYzLjM5YzAgLjQtLjI2OC45MzgtLjgwMyAxLjM4M3MtMS4zODUuNzU4LTIuNS44MDNjLS4yMjMgMC0uMzU1LjA0NS0uNTguMDQ1SDg1LjkxNnptNjIuMTk1LTYuNzM2YzAgMy45NyAzIDYuMiA4Ljk3IDYuNjQ4LjU4LjA0NSAxLjExNS4wODggMS42OTUuMDg4aDE1LjE3di0zLjg4aC0xNS4zMDNjLTMuMzkzIDAtNC42ODYtLjg0OC00LjY4Ni0yLjl2LTIwLjA3OEgxNDguMXYyMC4xMjN6bS0zMi42MTUuMTc3di0xMy44M2MwLTMuNTI1IDIuNDk4LTUuNjY4IDcuMzYzLTYuMzM2LjUzNS0uMDQ1IDEuMDctLjA5IDEuNTYtLjA5aDExLjA2NGMuNTggMCAxLjA3Mi4wNDUgMS42NTIuMDkgNC44NjMuNjY4IDcuMzE2IDIuODEgNy4zMTYgNi4zMzZ2MTMuODNjMCAyLjg1NS0xLjAyNSA0LjM3My0zLjQzNiA1LjRsNS43MSA1LjE3NGgtNi43MzZsLTQuNjQtNC4xOTMtNC42ODYuMjY4aC02LjI0NmExMy42NiAxMy42NiAwIDAgMS0zLjM5MS0uNDQ1Yy0zLjctMS4wMjgtNS41My0yLjk5LTUuNTMtNi4yMDR6bTYuMjktLjMxYzAgLjE3OC4xLjM1NS4xMzUuNTguMzEyIDEuNjA1IDEuODI4IDIuNDk4IDQuMTQ4IDIuNDk4aDUuMjY2bC00LjgxOC00LjM3M2g2LjczNmw0LjIzOCAzLjgzOGMuODA1LS40NDcgMS4yOTUtMS4wNzIgMS40NzMtMS44NzUuMDQ1LS4xNzguMDQ1LS40LjA0NS0uNTh2LTEzLjI1MmMwLS4xNzggMC0uMzU1LS4wNDUtLjUzNS0uMzEyLTEuNTE2LTEuODI4LTIuMzYzLTQuMTA0LTIuMzYzaC04Ljc5Yy0yLjU4OCAwLTQuMjgzIDEuMTE1LTQuMjgzIDIuODk4eiIgZmlsbD0iI2NlOGIyYyIvPjwvZz48L3N2Zz4=
+    fields: []
+    source: maintenance.yaml

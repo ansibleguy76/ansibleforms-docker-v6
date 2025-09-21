@@ -1,0 +1,37 @@
+categories:
+  - name: Default
+    icon: bars
+  - name: Expressions
+    icon: code
+  - name: Queries
+    icon: flask
+  - name: Ansible
+    icon: atom
+  - name: AWX
+    icon: magic
+  - name: Demo
+    icon: heart
+  - name: Maintenance
+    icon: cogs
+roles:
+  - name: admin
+    groups:
+      - local/admins
+      - ldap/Domain Admins
+  - name: designers
+    groups:
+      - local/designers
+    options:
+      showDesigner: true
+      showLogs: true
+      showDebugButtons: true
+  - name: operators
+    groups:
+      - local/operators
+      - local/designers
+  - name: demo
+    groups:
+      - local/demo
+  - name: public
+    groups: []
+constants: {}

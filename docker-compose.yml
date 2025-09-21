@@ -1,0 +1,57 @@
+version: '3.0'
+
+services:
+  # MySql Server
+  mysqldb:
+    image: mysql:8.4.5
+    container_name: af_db
+    restart: unless-stopped
+    # load extra environment variables from file
+    env_file: ./.env
+    # Set manual environment variables
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_PASSWORD
+    ports:
+      # Mount host port to docker internal port
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      # Map database location (to maintain persistency)
+      - ./data/mysql/db:/var/lib/mysql
+      # Map my.cnf file (to maintain persistency)
+      - ./data/mysql/my.cnf:/etc/mysql/my.cnf
+  # AnsibleForms application
+  app:
+    # Only start after MySql
+    depends_on:
+      - mysqldb
+    image: ansibleguy/ansibleforms:betav6
+    container_name: af_app
+    restart: unless-stopped
+    ports:
+      # Mount host port to docker internal port
+      - $WEBAPP_LOCAL_PORT:$WEBAPP_DOCKER_PORT
+    # Load extra environment variables from file
+    env_file:
+      - ./.env
+    # Set environment variables
+    environment:
+      - DB_HOST=mysqldb
+      - DB_USER=$MYSQLDB_USER
+      - DB_PASSWORD=$MYSQLDB_PASSWORD
+      - DB_PORT=$MYSQLDB_DOCKER_PORT
+      - PORT=$WEBAPP_DOCKER_PORT
+      # adding python path to add our custom persistent lib location
+      - PYTHONPATH=/usr/lib/python311.zip:/usr/lib/python3.11:/usr/lib/python3.11/lib-dynload:/usr/lib/python3.11/site-packages:/app/dist/persistent/python/lib      
+    # allow interactive shell
+    stdin_open: true
+    # allow terminal
+    tty: true
+    volumes:
+      # Mount application folder to host folder (to maintain persistency)
+      - ./data:/app/dist/persistent                         # persistent app data
+      - ./data/ssh:$HOME_DIR/.ssh                           # persistent ssh keys
+      - ./data/git/.gitconfig:$HOME_DIR/.gitconfig          # custom git config
+      - ./data/ansible/ansible.cfg:/etc/ansible/ansible.cfg # custom ansible.cfg
+      - ./data/ansible/roles:/etc/ansible/roles             # custom ansible roles
+      - ./data/ansible/collections:/etc/ansible/collections # custom ansible collections
+
