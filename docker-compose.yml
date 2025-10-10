@@ -24,7 +24,7 @@ services:
     # Only start after MySql
     depends_on:
       - mysqldb
-    image: ansibleguy/ansibleforms:betav6
+    image: ansibleguy/ansibleforms:latest
     container_name: af_app
     restart: unless-stopped
     ports:
