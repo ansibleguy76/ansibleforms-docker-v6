@@ -9,7 +9,7 @@
     description: This will cleanup all ansible job logs.
     icon: trash
     credentials:
-      mysql_credentials: __self__
+      mysql_credential: __self__
     categories:
       - Demo
       - Ansible
