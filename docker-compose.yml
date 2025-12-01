@@ -54,4 +54,5 @@ services:
       - ./data/ansible/ansible.cfg:/etc/ansible/ansible.cfg # custom ansible.cfg
       - ./data/ansible/roles:/etc/ansible/roles             # custom ansible roles
       - ./data/ansible/collections:/etc/ansible/collections # custom ansible collections
+      # - ./data/assets/images:/app/dist/views/img          # 6 custom images (login_background_%theme%.jpg and logo_%theme%.svg | 2 for each theme = light, dark and color)
 
